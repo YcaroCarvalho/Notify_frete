@@ -106,7 +106,7 @@ def buscar_imprimir_carga(message):
     driver.get(URL)
     ultimo_cod_link = [None]
 
-'''
+
     while True:
         links = driver.find_elements(By.XPATH,  '//*[@id="__next"]/main/div/fuel-grid-container/fuel-grid-item[2]/main/fuel-grid-item/div/a[1]')
         href = [link.get_attribute('href') for link in links]
@@ -207,5 +207,5 @@ def buscar_imprimir_carga(message):
         else:
             time.sleep(0.5)
             driver.refresh()
-'''
+            
 bot.infinity_polling()
