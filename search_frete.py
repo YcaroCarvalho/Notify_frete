@@ -2,105 +2,13 @@ from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-import telebot
 import time
 import pyautogui
-""""
 
 service = Service()
 options = webdriver.ChromeOptions()
 driver = webdriver.Chrome(service=service, options=options)
-"""
 
-TOKEN = '7178561915:AAG-hO5uBNdo8JjbQj78cB6myuao2PKIbnU'
-CHAT_ID = '-4544372775'
-bot = telebot.TeleBot(TOKEN)
-
-@bot.message_handler(commands=['help', 'start'])
-def start(message):
-    bot.reply_to(message, "-Olá, sou seu assistente que vai lhe auxiliar a encontrar os melhores fretes para voce-\n")
-    bot.reply_to(message, "De é a origim do local que vc deseja começar buscando seus fretes:\n")
-    bot.reply_to(message,'''
-        Clique no local de ORIGEM desejado:
-        -----------------------------------
-        SÃO PAULO: /Sp
-        MINAS GERAIS: /Mg
-        PARANÁ: /Pr
-        SANTA CATARINA: /Sc
-        BAHIA: /Ba
-        ACRE: /Ac   
-        ALAGOAS: /Al  
-        AMAPÁ: /Ap
-        AMAZONAS: /Am
-        CEARÁ: /Ce
-        DISTRITO FEDERAL: /Df
-        ESPIRITO SANTO: /Es
-        GOIÁS: /Go
-        MARANHÃO: /Ma
-        MATO GROSSO: /Mt
-        MATO GROSSO DO SUL: /Ms
-        PARÁ: /Pa
-        PARAÍBA: /Pb
-        RIO DE JANEIRO: /Rj
-        RIO GRANDE DO NORTE: /Rn
-        RIO GRANDE DO SUL: /Rs
-        RONDÔNIA: /Ro
-        RORAIMA: /Rr
-        SERGIPE: /Se
-        TOCANTINS: /To
-                    ''')
-                 
-      
-@bot.message_handler(commands=['Sp', 'Pr'])
-def def_origin_url(message):
-    
-    url_origim = message.text
-    bot.reply_to(message,'''
-        Clique no local de DESTINO desejado:
-        -----------------------------------
-        SÃO PAULO: /Sp
-        MINAS GERAIS: /Mg
-        PARANÁ: /Pr
-        SANTA CATARINA: /Sc
-        BAHIA: /Ba
-        ACRE: /Ac   
-        ALAGOAS: /Al  
-        AMAPÁ: /Ap
-        AMAZONAS: /Am
-        CEARÁ: /Ce
-        DISTRITO FEDERAL: /Df
-        ESPIRITO SANTO: /Es
-        GOIÁS: /Go
-        MARANHÃO: /Ma
-        MATO GROSSO: /Mt
-        MATO GROSSO DO SUL: /Ms
-        PARÁ: /Pa
-        PARAÍBA: /Pb
-        RIO DE JANEIRO: /Rj
-        RIO GRANDE DO NORTE: /Rn
-        RIO GRANDE DO SUL: /Rs
-        RONDÔNIA: /Ro
-        RORAIMA: /Rr
-        SERGIPE: /Se
-        TOCANTINS: /To
-                    ''')
-    return url_origim
-
-
-@bot.message_handler(commands=['Sp', 'Pr'])
-def def_destino_url(message):
-    
-    url_destino = message.text
-    
-    return url_destino
-
-url_origim = def_origin_url
-bot.send_message(CHAT_ID,text=f'{url_origim}')
-
-
-bot.infinity_polling()
-"""
-print (url_origim)
 URL = 'https://www.fretebras.com.br/fretes/carga-de-pr/carga-para-mg'
 driver.get(URL)
 ultimo_cod_link = [None]
@@ -206,4 +114,3 @@ while True:
     else:
         time.sleep(0.5)
         driver.refresh()
-"""
