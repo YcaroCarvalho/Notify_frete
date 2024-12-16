@@ -1,3 +1,4 @@
 import pyautogui
 
-print (pyautogui.position())
+def mouse_position():
+    print (pyautogui.position())

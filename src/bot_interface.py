@@ -5,10 +5,22 @@ from selenium.webdriver.common.by import By
 import telebot
 import time
 import pyautogui
+from dotenv import load_dotenv
+import os
+from pathlib import Path
 
-TOKEN = '7178561915:AAG-hO5uBNdo8JjbQj78cB6myuao2PKIbnU'
-CHAT_ID = '-4544372775'
+load_dotenv()
+    
+
+TOKEN = os.getenv("token")
+CHAT_ID = os.getenv("chat_id")
+
+print(TOKEN,CHAT_ID)
+
+
 bot = telebot.TeleBot(TOKEN)
+
+
 
 url_origim_global = None
 url_destino_global = None
