@@ -13,104 +13,102 @@ URL = 'https://www.fretebras.com.br/fretes/carga-de-pr/carga-para-mg'
 driver.get(URL)
 ultimo_cod_link = [None]
 
+class XPATHS():
 
-while True:
-    links = driver.find_elements(By.XPATH,  '//*[@id="__next"]/main/div/fuel-grid-container/fuel-grid-item[2]/main/fuel-grid-item/div/a[1]')
-    href = [link.get_attribute('href') for link in links]
-    cod_link = (href[0][-14:-1])
+    def get_xpaths():
+        links = driver.find_elements(By.XPATH,  '//*[@id="__next"]/main/div/fuel-grid-container/fuel-grid-item[2]/main/fuel-grid-item/div/a[1]')
+        href = [link.get_attribute('href') for link in links]
+        cod_link = (href[0][-14:-1])
 
-    if cod_link not in ultimo_cod_link:
-        ultimo_link = href
-        ultimo_cod_link.append(cod_link)
-        #ENTRARA COMANDO PARA O BOT E PARA COLETAR DADOS DO SITE
-        time.sleep(1)
-        print(ultimo_link)
-        pyautogui.click(x=871, y=381)
-        time.sleep(1)  
+        if cod_link not in ultimo_cod_link:
+            ultimo_link = href
+            ultimo_cod_link.append(cod_link)
+            #ENTRARA COMANDO PARA O BOT E PARA COLETAR DADOS DO SITE
+            time.sleep(1)
+            print(ultimo_link)
+            pyautogui.click(x=871, y=381)
+            time.sleep(1)  
+        else:
+            time.sleep(0.7)
+            driver.refresh()
+
+    def search_xpaths(xpaths):
+        for xpath in xpaths:
+            try:
+                informacao = driver.find_element(By.XPATH, xpath).text
+                return informacao
+            except NoSuchElementException:
+                pass
 
 
-        def search_xpaths(xpaths):
-            for xpath in xpaths:
-                try:
-                    informacao = driver.find_element(By.XPATH, xpath).text
-                    return informacao
-                except NoSuchElementException:
-                    pass
+class Frete(XPATHS):
+        
+        def __init__(self, xpaths):
+            self.xpaths = xpaths
 
-
-        #COLETA INFORMAÇÕES DO PRODUTO
-        xpaths = [
-            "/html/body/div[3]/div/div[1]/div/div[3]/div[2]/span[1]",
-            "/html/body/div[3]/div/div[1]/div/div[4]/div[2]/span[1]",
-            '/html/body/div[3]/div/div[1]/div/div[5]/div[2]/span[1]',
-            '/html/body/div[3]/div/div[1]/div/div[6]/div[2]/span[1]',
-            '/html/body/div[3]/div/div[1]/div/div[7]/div[2]/span[1]', 
-            ]
-
-        produto = search_xpaths(xpaths)
+        def get_produto(self):
+            produto = XPATHS.search_xpaths(self.xpaths)
+            return produto
 
         #COLETA INFORMAÇÕES DO VEICULO
 
-        xpaths = ['/html/body/div[3]/div/div[1]/div/div[3]/div[2]/div[1]/span/a'
-                  '/html/body/div[3]/div/div[1]/div/div[4]/div[2]/div[1]/span/a',
-                  '/html/body/div[3]/div/div[1]/div/div[5]/div[2]/div[1]/span/a',
-                  '/html/body/div[3]/div/div[1]/div/div[6]/div[2]/div[1]/span/a',
-                  '/html/body/div[3]/div/div[1]/div/div[7]/div[2]/div[1]/span/a'
-                  ]
-        veiculo = search_xpaths(xpaths)
+        def get_produto(self):
+            veiculo = XPATHS.search_xpaths(self.xpaths)
+            return veiculo
 
         # COLETA INFORMAÇÕES DA CARROCERIA
-        xpaths = ['/html/body/div[3]/div/div[1]/div/div[3]/div[2]/div[2]/span/a',
-                  '/html/body/div[3]/div/div[1]/div/div[4]/div[2]/div[2]/span/a',
-                  '/html/body/div[3]/div/div[1]/div/div[5]/div[2]/div[2]/span/a',
-                  '/html/body/div[3]/div/div[1]/div/div[6]/div[2]/div[2]/span/a',
-                  '/html/body/div[3]/div/div[1]/div/div[7]/div[2]/div[2]/span/a'
-                  ]
-        carroceria = search_xpaths(xpaths)
+        def get_carroceria(self):
+            carroceria = XPATHS.search_xpaths(self.xpaths)
+            return carroceria 
 
         # COLETA INFORMAÇÕES DO TIPO DA CARGA
-        xpaths = ['/html/body/div[3]/div/div[1]/div/div[3]/div[2]/div[5]/span',
-                  '/html/body/div[3]/div/div[1]/div/div[4]/div[2]/div[5]/span',
-                  '/html/body/div[3]/div/div[1]/div/div[5]/div[2]/div[5]/span',
-                  '/html/body/div[3]/div/div[1]/div/div[6]/div[2]/div[5]/span',
-                  '/html/body/div[3]/div/div[1]/div/div[7]/div[2]/div[5]/span'
-                  ]
-        tipo_carga = search_xpaths(xpaths)
+        def get_tipo_carga(self):
+            tipo_carga = XPATHS.search_xpaths(self.xpaths)
+            return tipo_carga
+        
 
         # COLETA INFORMAÇÕES DO RASTREIO
-        xpaths = ['/html/body/div[3]/div/div[1]/div/div[3]/div[2]/div[6]/span',
-                  '/html/body/div[3]/div/div[1]/div/div[4]/div[2]/div[6]/span',
-                  '/html/body/div[3]/div/div[1]/div/div[5]/div[2]/div[6]/span',
-                  '/html/body/div[3]/div/div[1]/div/div[6]/div[2]/div[6]/span',
-                  '/html/body/div[3]/div/div[1]/div/div[7]/div[2]/div[6]/span'
-                  ]
-        search_xpaths(xpaths)
-
+        def get_rastreio(self):
+            rastreio = XPATHS.search_xpaths(self.xpaths)
+            return rastreio
+        
+        def get_agenciamento(self):
         #INFORMAÇÕES SOBRE O AGENCIAMENTO
-        xpaths = ['/html/body/div[3]/div/div[1]/div/div[3]/div[2]/div[7]/span',
+            agenciameto = XPATHS.search_xpaths(self.xpaths)
+            return agenciameto
+
+        #ORIGEM E DESTINO
+        def get_origim(self):
+            origem_city = driver.find_element(By.XPATH, '/html/body/div[3]/div/div[1]/div/div[3]/div[1]/span/a[1]').text
+            origem_estado = driver.find_element(By.XPATH, '/html/body/div[3]/div/div[1]/div/div[3]/div[1]/span/a[2]').text
+            origem = f'{origem_city} - {origem_estado}'
+            return origem
+        
+        def get_destino(self):
+            destino_city = driver.find_element(By.XPATH, '/html/body/div[3]/div/div[1]/div/div[3]/div[3]/span/a[1]').text
+            destino_estado = driver.find_element(By.XPATH, '/html/body/div[3]/div/div[1]/div/div[3]/div[3]/span/a[2]').text
+            destino = f'{destino_city} - {destino_estado}'
+            return destino
+        
+
+        driver.back()
+
+x = XPATHS
+f = Frete
+
+xpaths = ['/html/body/div[3]/div/div[1]/div/div[3]/div[2]/div[7]/span',
                   '/html/body/div[3]/div/div[1]/div/div[4]/div[2]/div[7]/span',
                   '/html/body/div[3]/div/div[1]/div/div[5]/div[2]/div[7]/span',
                   '/html/body/div[3]/div/div[1]/div/div[6]/div[2]/div[7]/span',
                   '/html/body/div[3]/div/div[1]/div/div[7]/div[2]/div[7]/span',
                   ]
-        search_xpaths(xpaths)
-
-        #ORIGEM E DESTINO
-        
-        origem_city = driver.find_element(By.XPATH, '/html/body/div[3]/div/div[1]/div/div[3]/div[1]/span/a[1]').text
-        origem_estado = driver.find_element(By.XPATH, '/html/body/div[3]/div/div[1]/div/div[3]/div[1]/span/a[2]').text
-        origem = f'{origem_city} - {origem_estado}'
-        origem = ('').join(origem)
-        
-        destino_city = driver.find_element(By.XPATH, '/html/body/div[3]/div/div[1]/div/div[3]/div[3]/span/a[1]').text
-        destino_estado = driver.find_element(By.XPATH, '/html/body/div[3]/div/div[1]/div/div[3]/div[3]/span/a[2]').text
-        destino = f'{destino_city} - {destino_estado}'
-        destino = ('').join(destino)
-
-        
-
-        driver.back()
-
-    else:
-        time.sleep(0.7)
-        driver.refresh()
+while True:
+    x.get_xpaths()
+    agenciamento = f.get_agenciamento(['/html/body/div[3]/div/div[1]/div/div[3]/div[2]/div[7]/span',
+                  '/html/body/div[3]/div/div[1]/div/div[4]/div[2]/div[7]/span',
+                  '/html/body/div[3]/div/div[1]/div/div[5]/div[2]/div[7]/span',
+                  '/html/body/div[3]/div/div[1]/div/div[6]/div[2]/div[7]/span',
+                  '/html/body/div[3]/div/div[1]/div/div[7]/div[2]/div[7]/span',
+                  ])
+    print(agenciamento, xpaths)
+    print (agenciamento)
